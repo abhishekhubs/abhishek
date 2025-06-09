@@ -33,7 +33,7 @@ function App() {
             <button onClick={() => handleNav('gallery')} className="text-white hover:text-blue-400 font-semibold">Gallery</button>
             <button onClick={() => handleNav('achievement')} className="text-white hover:text-blue-400 font-semibold">Achievement</button>
             <a
-              href="abhishek's resume.pdf"
+              href="resume.pdf"
               download
               className="text-white hover:text-blue-400 font-semibold"
               target="_blank"
@@ -76,7 +76,7 @@ function App() {
             <button onClick={() => handleNav('gallery')} className="text-white hover:text-blue-400 font-semibold">Gallery</button>
             <button onClick={() => handleNav('achievement')} className="text-white hover:text-blue-400 font-semibold">Achievement</button>
             <a
-              href="abhishek's resume.pdf"
+              href="resume.pdf"
               download
               className="text-white hover:text-blue-400 font-semibold"
               target="_blank"
@@ -123,7 +123,7 @@ function App() {
           <button onClick={() => handleNav('gallery')} className="text-white hover:text-blue-400 font-semibold">Gallery</button>
           <button onClick={() => handleNav('achievement')} className="text-white hover:text-blue-400 font-semibold">Achievement</button>
           <a
-            href="/resume.pdf"
+            href="resume.pdf" // Replace with your actual resume file path
             download
             className="text-white hover:text-blue-400 font-semibold"
             target="_blank"
