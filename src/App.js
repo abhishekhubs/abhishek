@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  // Simple state to handle page navigation
   const [page, setPage] = useState('home');
+  const [showThankYou, setShowThankYou] = useState(false);
 
   // Handler for navigation
   const handleNav = (target) => {
@@ -20,6 +20,28 @@ function App() {
     }
   };
 
+  // Handler for resume download
+  const handleResumeDownload = () => {
+    setShowThankYou(true);
+    setTimeout(() => setShowThankYou(false), 2000); // Hide after 2 seconds
+  };
+
+  // Prevent copy and replace clipboard content with "Copying the text is disabled!"
+  useEffect(() => {
+    const handleCopy = (e) => {
+      e.preventDefault();
+      if (e.clipboardData) {
+        e.clipboardData.setData('text/plain', 'Copying the text is disabled!');
+      } else if (window.clipboardData) {
+        window.clipboardData.setData('Text', 'Copying the text is disabled!');
+      }
+    };
+    document.addEventListener('copy', handleCopy);
+    return () => {
+      document.removeEventListener('copy', handleCopy);
+    };
+  }, []);
+
   // Gallery Page
   if (page === 'gallery') {
     return (
@@ -28,6 +50,7 @@ function App() {
         <header className="flex flex-col md:flex-row md:justify-between md:items-center py-4 px-4 bg-gray-900 rounded-lg shadow mb-8 gap-4 md:gap-0">
           <h1 className="text-2xl font-bold text-center md:text-left mb-2 md:mb-0">Abhishek's Portfolio</h1>
           <nav className="flex justify-center md:justify-end space-x-4">
+      
             <button onClick={() => handleNav('home')} className="text-white hover:text-blue-400 font-semibold">Home</button>
             <button onClick={() => handleNav('contact')} className="text-white hover:text-blue-400 font-semibold">Contact</button>
             <button onClick={() => handleNav('gallery')} className="text-white hover:text-blue-400 font-semibold">Gallery</button>
@@ -38,6 +61,7 @@ function App() {
               className="text-white hover:text-blue-400 font-semibold"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={handleResumeDownload}
             >
               Resume
             </a>
@@ -81,6 +105,7 @@ function App() {
               className="text-white hover:text-blue-400 font-semibold"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={handleResumeDownload}
             >
               Resume
             </a>
@@ -128,6 +153,7 @@ function App() {
             className="text-white hover:text-blue-400 font-semibold"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={handleResumeDownload}
           >
             Resume
           </a>
@@ -138,9 +164,9 @@ function App() {
         <div id="home" className="flex flex-col md:flex-row items-center md:justify-between">
           <div className="md:w-3/4">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-fade-in">Abhishek Shrivastav</h1>
-            <p className="text-lg md:text-xl mb-6 animate-fade-in delay-200">About Me</p>
+            <p className="text-lg md:text-xl mb-3 animate-fade-in delay-200"><em>Hello!</em></p>
             <p className="text-lg md:text-xl mb-6 animate-fade-in delay-200">
-              Bachelor of Engineering in Computer Science & Engineering, at Srinivas Institute of Technology, Mangalore. Currently pursuing a Bachelor of Engineering in Computer Science & Engineering, with a strong focus on software development, algorithms, and data structures.
+              I'm a Computer Science & Engineering student at Srinivas Institute of Technology, Mangalore. Currently pursuing a Bachelor of Engineering in Computer Science & Engineering, with a strong focus on software development, algorithms, and data structures.
               Eager to apply engineering principles and technical skills to solve real-world problems and contribute to cutting-edge projects in the tech industry
             </p>
           </div>
@@ -167,17 +193,35 @@ function App() {
         </section>
 
         <section className="mt-10 animate-fade-in delay-700">
-          <h2 className="text-2xl font-semibold mb-2">Project</h2>
+          <h2
+            className="text-2xl font-semibold mb-2 cursor-pointer text-blue-400 hover:underline"
+            onClick={() => window.open("https://github.com/abhishekhubs?tab=repositories", "_blank")}
+            title="View all my GitHub repositories"
+          >
+            Projects
+          </h2>
           <div>
-            <h3 className="text-xl font-bold">ZetaOne</h3>
+            <h3
+              className="text-xl font-bold text-green-400 hover:underline cursor-pointer"
+              onClick={() => window.open("https://github.com/abhishekhubs/hackathon", "_blank")}
+              title="View ZetaOne on GitHub"
+            >
+              ZetaOne
+            </h3>
             <p>
               A platform connecting users with service providers like electricians and plumbers.
-              Features booking, notifications, responsive UI, and ratings. Built with HTML, CSS, JS, backend.
+              Features booking, notifications, responsive UI, and ratings. Built with HTML, CSS, JS.
             </p>
           </div>
-          <div className="my-4"></div> {/* Added space between projects */}
+          <div className="my-4"></div>
           <div>
-            <h3 className="text-xl font-bold">Flood Awareness</h3>
+            <h3
+              className="text-xl font-bold text-green-400 hover:underline cursor-pointer"
+              onClick={() => window.open("https://github.com/abhishekhubs/Flood_Awarness-main", "_blank")}
+              title="View Flood Awareness on GitHub"
+            >
+              Flood Awareness
+            </h3>
             <p>
               A web application aimed at raising awareness about flood risks and safety measures.
               Built with React, Tailwind CSS, and hosted on GitHub Pages.
@@ -198,7 +242,7 @@ function App() {
             </div>
             <div>
               <h3 className="text-xl font-bold">Sri Chaitanya PU College</h3>
-              <p>Computer Science (PCMC)</p>
+              <p>Mathematics & Computer Science (PCMC)</p>
               <p>Score: 73%</p>
               <p className="text-sm text-gray-300">2021 - 2023</p>
             </div>
@@ -206,7 +250,7 @@ function App() {
               <h3 className="text-xl font-bold">Sri Chaitanya Techno School</h3>
               <p>Science Stream</p>
               <p>Score: 73%</p>
-              <p className="text-sm text-gray-300">2021 - 2023</p>
+              <p className="text-sm text-gray-300">2021</p>
             </div>
           </div>
         </section>
@@ -234,7 +278,7 @@ function App() {
         {/* Contact Section */}
         <section id="contact" className="mt-10 animate-fade-in delay-900">
           <h2 className="text-2xl font-semibold mb-2">Contact</h2>
-          <p>Phone: 7892208908</p>
+          <p>Phone: +91 7892208908</p>
           <p>
             Email:{" "}
             <a
@@ -247,7 +291,9 @@ function App() {
           <p className="mt-2">
             <a className="text-blue-400 underline" href="https://github.com/abhishekhubs" target="_blank" rel="noreferrer">GitHub</a>{' '}
             |{' '}
-            <a className="text-blue-400 underline" href="https://www.linkedin.com/in/abhishek-shrivastav-717329291/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a className="text-blue-400 underline" href="https://www.linkedin.com/in/abhishek-shrivastav-717329291/" target="_blank" rel="noreferrer">LinkedIn</a>{' '}
+            |{' '}
+            <a className="text-blue-400 underline" href="https://x.com/_abhishek2" target="_blank" rel="noreferrer">Twitter</a>
           </p>
         </section>
       </div>
@@ -255,8 +301,27 @@ function App() {
       <footer className="mt-12 text-center text-gray-400 text-sm">
         &copy; {new Date().getFullYear()} Abhishek Shrivastav. All rights reserved.
       </footer>
+      {showThankYou && (
+        <div
+          className="fixed left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded shadow-lg z-50 animate-popup"
+          style={{ fontWeight: 'bold', fontSize: '1.1rem', top: 'calc(0.3cm + 2rem)' }}
+        >
+          Thank You for Downloading!
+        </div>
+      )}
     </div>
   );
 }
 
 export default App;
+
+/*
+@keyframes popup {
+  0% { opacity: 0; transform: scale(0.8) translateY(-20px);}
+  50% { opacity: 1; transform: scale(1.05) translateY(0);}
+  100% { opacity: 1; transform: scale(1) translateY(0);}
+}
+.animate-popup {
+  animation: popup 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+*/
